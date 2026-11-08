@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100c20">
+<title>LEVEL UP | Noé & un Pote</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --purple: #9b5cff;
+  --blue: #36baff;
+  --bg: #0b0915;
+  --card: #171326;
+  --white: #f7f4ff;
+  --muted: #aaa3c1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 15%, #6526a52b, transparent 45%),
+    radial-gradient(ellipse at 85% 55%, #007ac52b, transparent 45%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+nav {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8%;
+  border-bottom: 1px solid #ffffff12;
+  background: #0b0915dd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(15px);
+}
+
+.logo {
+  font-family: Orbitron, sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 2px;
+}
+
+.logo span { color: var(--purple); }
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 10px 18px;
+  border: 1px solid #9b5cff66;
+  border-radius: 30px;
+}
+
+.hero {
+  max-width: 1050px;
+  margin: auto;
+  padding: 100px 20px 65px;
+  text-align: center;
+}
+
+.tag {
+  display: inline-block;
+  padding: 8px 18px;
+  border: 1px solid #9b5cff66;
+  border-radius: 30px;
+  color: #c9a8ff;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+h1 {
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(34px, 7vw, 65px);
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+h1 span {
+  background: linear-gradient(90deg, #b477ff, #38bdff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  max-width: 620px;
+  margin: 22px auto;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 14px;
+  transition: .25s;
+  text-decoration: none;
+}
+
+.btn:hover { transform: translateY(-3px); }
+
+.btn-primary {
+  color: white;
+  background: linear-gradient(100deg, #8c46e9, #278fe9);
+  box-shadow: 0 5px 30px #8744ec55;
+}
+
+.btn-secondary {
+  color: white;
+  background: #ffffff0c;
+  border: 1px solid #ffffff30;
+}
+
+.stats {
+  max-width: 850px;
+  margin: 25px auto 85px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.stat {
+  background: var(--card);
+  border: 1px solid #ffffff12;
+  border-radius: 16px;
+  padding: 24px 10px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(18px, 4vw, 27px);
+  background: linear-gradient(90deg, #b477ff, #38bdff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+section {
+  max-width: 900px;
+  padding: 50px 20px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  font-family: Orbitron, sans-serif;
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+.section-desc {
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 35px;
+}
+
+.card {
+  background: linear-gradient(145deg, #1c1730, #11101f);
+  border: 1px solid #9b5cff35;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 15px 50px #00000030;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.progress-info strong { color: #c19aff; }
+
+.progress-track {
+  width: 100%;
+  height: 13px;
+  border-radius: 30px;
+  background: #ffffff15;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #a24aff, #32baff);
+  box-shadow: 0 0 20px #9b5cff88;
+  transition: width 1s ease;
+}
+
+.progress-note {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.donation-box {
+  text-align: center;
+}
+
+.donation-icon {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+.donation-box h3 {
+  font-family: Orbitron, sans-serif;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.donation-box p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.donation-box .btn { width: 100%; }
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.feature {
+  padding: 25px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid #ffffff12;
+}
+
+.feature .emoji { font-size: 32px; }
+
+.feature h3 {
+  margin: 12px 0 8px;
+  font-size: 16px;
+}
+
+.feature p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+footer {
+  text-align: center;
+  padding: 45px 20px;
+  border-top: 1px solid #ffffff12;
+  margin-top: 60px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 2;
+}
+
+footer strong { color: #b88bff; }
+
+#notice {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%) translateY(150px);
+  background: #241a3b;
+  border: 1px solid #a36aff;
+  color: white;
+  border-radius: 12px;
+  padding: 16px 22px;
+  width: max-content;
+  max-width: 90%;
+  font-size: 13px;
+  text-align: center;
+  transition: .4s;
+  z-index: 20;
+}
+
+#notice.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media(max-width:600px) {
+  nav { padding: 0 5%; }
+  .hero { padding-top: 70px; }
+  .stats { gap: 8px; }
+  .stat { padding: 18px 5px; }
+  .card { padding: 20px; }
+  .features { grid-template-columns: 1fr; }
+  .section-title { font-size: 22px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">LEVEL<span>UP</span> 🎮</div>
+  <a href="#cagnotte" class="nav-link">Soutenir le projet</a>
+</nav>
+
+<header class="hero">
+  <div class="tag">🎮 PROJET GAMING 2026</div>
+
+  <h1>
+    DEUX POTES.<br>
+    UN SEUL <span>RÊVE.</span>
+  </h1>
+
+  <p>
+    Salut ! Nous sommes Noé et un Pote.
+    Nous avons un objectif : réunir suffisamment d'argent
+    pour nous offrir deux PC gaming et pouvoir enfin
+    profiter ensemble de nos jeux préférés !
+  </p>
+
+  <div class="hero-buttons">
+    <a href="#cagnotte" class="btn btn-primary">
+      ❤️ Participer à la cagnotte
+    </a>
+    <a href="#projet" class="btn btn-secondary">
+      Découvrir notre projet
+    </a>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat">
+    <strong id="raised">0 €</strong>
+    <small>Déjà récoltés</small>
+  </div>
+  <div class="stat">
+    <strong>1 500 €</strong>
+    <small>Objectif à atteindre</small>
+  </div>
+  <div class="stat">
+    <strong id="percentage">0 %</strong>
+    <small>Objectif atteint</small>
+  </div>
+</div>
+
+<section id="cagnotte">
+  <h2 class="section-title">NOTRE CAGNOTTE 💜</h2>
+  <p class="section-desc">
+    Chaque participation nous rapproche de notre rêve !
+  </p>
+
+  <div class="card">
+    <div class="progress-info">
+      <span>Progression de la cagnotte</span>
+      <strong id="progressText">0 / 1 500 €</strong>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <p class="progress-note">
+      Merci à toutes les personnes qui nous soutiennent ! 💙
+    </p>
+  </div>
+
+  <br><br>
+
+  <div class="card donation-box">
+    <div class="donation-icon">💸</div>
+    <h3>ENVIE DE NOUS AIDER ?</h3>
+    <p>
+      Même un petit don peut faire la différence.
+      Il n'y a aucune obligation : partager notre projet
+      nous aide également énormément !
+    </p>
+
+    <button class="btn btn-primary" onclick="donate()">
+      ❤️ FAIRE UN DON
+    </button>
+  </div>
+</section>
+
+<section id="projet">
+  <h2 class="section-title">NOTRE PROJET 🚀</h2>
+  <p class="section-desc">
+    Pourquoi avons-nous besoin de votre aide ?
+  </p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="emoji">🖥️</div>
+      <h3>Deux PC gaming</h3>
+      <p>
+        Acheter deux ordinateurs capables de faire tourner
+        nos jeux préférés dans de bonnes conditions.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="emoji">🎮</div>
+      <h3>Jouer ensemble</h3>
+      <p>
+        Pouvoir jouer en ligne, découvrir de nouveaux jeux
+        et partager de bons moments.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="emoji">⚡</div>
+      <h3>Un meilleur setup</h3>
+      <p>
+        Construire progressivement un espace gaming
+        confortable et performant.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="emoji">💜</div>
+      <h3>Merci à vous !</h3>
+      <p>
+        Chaque geste compte, même un simple partage
+        de notre cagnotte.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card donation-box">
+    <div class="donation-icon">🙏</div>
+    <h3>MERCI POUR VOTRE SOUTIEN !</h3>
+    <p>
+      Que vous participiez ou que vous partagiez cette page,
+      nous vous remercions énormément.
+      On espère pouvoir bientôt vous montrer nos deux setups !
+    </p>
+    <button class="btn btn-secondary" onclick="shareSite()">
+      📤 PARTAGER LE SITE
+    </button>
+  </div>
+</section>
+
+<footer>
+  <strong>LEVEL UP 🎮</strong><br>
+  Une cagnotte créée par Noé et un Pote.<br>
+  Fait avec 💜 et beaucoup de motivation.
+</footer>
+
+<div id="notice"></div>
+
+<script>
+// ====================================
+// CONFIGURATION DE LA CAGNOTTE
+// ====================================
+
+// Objectif en euros
+const GOAL = 1500;
+
+// Montant déjà récolté (à modifier manuellement)
+const RAISED = 0;
+
+// Adresse du lien de paiement à ajouter plus tard
+const PAYMENT_LINK = "";
+
+// ====================================
+
+function updateProgress() {
+  const percentage = Math.min((RAISED / GOAL) * 100, 100);
+
+  document.getElementById("raised").textContent =
+    RAISED.toLocaleString("fr-FR") + " €";
+
+  document.getElementById("percentage").textContent =
+    Math.round(percentage) + " %";
+
+  document.getElementById("progressText").textContent =
+    RAISED.toLocaleString("fr-FR") + " / " +
+    GOAL.toLocaleString("fr-FR") + " €";
+
+  document.getElementById("progressBar").style.width =
+    percentage + "%";
+}
+
+function showNotice(message) {
+  const notice = document.getElementById("notice");
+  notice.textContent = message;
+  notice.classList.add("show");
+
+  setTimeout(() => {
+    notice.classList.remove("show");
+  }, 3500);
+}
+
+function donate() {
+  if (PAYMENT_LINK.trim() !== "") {
+    window.open(PAYMENT_LINK, "_blank", "noopener");
+  } else {
+    showNotice(
+      "💜 Les dons seront bientôt disponibles ! Merci pour votre soutien."
+    );
+  }
+}
+
+async function shareSite() {
+  const data = {
+    title: "LEVEL UP - Noé et un Pote",
+    text: "Aidez-nous à financer nos deux PC gaming ! 🎮💜",
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(data);
+    } catch (error) {
+      // Partage annulé par le visiteur.
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(
+        window.location.href
+      );
+      showNotice("Lien du site copié ! 💜");
+    } catch (error) {
+      showNotice("Copiez l'adresse du site pour le partager !");
+    }
+  }
+}
+
+updateProgress();
+</script>
+
+</body>
+</html>
